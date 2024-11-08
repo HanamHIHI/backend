@@ -1,11 +1,25 @@
 # API
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import recommender_in_10min
 
 # Create the FastAPI app
 app = FastAPI()
+
+origins = [
+    "http://localhost:8000",
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Text(BaseModel):
     text: str
