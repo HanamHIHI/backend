@@ -182,8 +182,14 @@ def predict(targetText: str):
 
     ret_val = []
     for idx, result in enumerate(results[:5]):
-        printedString = result
-        print(printedString)
+        addr = df3.loc[df3["name"]==result[1]]["position"].values[0]
+        # df3.loc[df3["name"]==mapper[j]]["category3"].values[0]
+        dist = df3.loc[df3["name"]==result[1]]["total_distance"].values[0]
+        reqtime = df3.loc[df3["name"]==result[1]]["total_time"].values[0]
+
+        print(result, addr, dist, reqtime)
+        
+        # print(addr, dist, reqtime)
 
         ret_val.append({
             "idx": result[0],
@@ -191,6 +197,9 @@ def predict(targetText: str):
             "review_score": result[2],
             "category_score": result[3],
             "total_score": result[4],
+            "addr": str(addr),
+            "dist": int(dist),
+            "reqtime": int(reqtime),
         })
     print("입니다.")
 

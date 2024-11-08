@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["POST", "OPTIONS", "GET"],
     allow_headers=["*"],
 )
 
@@ -27,6 +27,10 @@ class Text(BaseModel):
 @app.get("/")
 def root():
     return {"Hello": "World"}
+
+@app.options("/")
+def response_options():
+    return {"Hallo": "Wollo"}
 
 @app.post('/predict/')
 async def create_item(text: Text):
