@@ -192,7 +192,7 @@ def predict(targetText: str):
         # print(addr, dist, reqtime)
 
         ret_val.append({
-            "idx": result[0],
+            "idx": idx+1,
             "name": result[1],
             "review_score": result[2],
             "category_score": result[3],
