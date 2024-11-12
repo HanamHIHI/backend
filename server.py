@@ -36,7 +36,7 @@ def root():
 def read_item(filename):
     targetFile = IMAGE_ROOT_DIR + filename + ".svg"
     print(f"File Download : {targetFile}")
-    return FileResponse(targetFile, media_type='image/jpg',filename=filename)
+    return FileResponse(targetFile, media_type='image/svg',filename=filename)
 
 @app.options("/")
 def response_options():
