@@ -2,6 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from starlette.responses import FileResponse
 
 import recommender_in_10min
 
@@ -9,17 +10,20 @@ import recommender_in_10min
 app = FastAPI()
 
 origins = [
-    "http://localhost:8000",
-    "http://localhost:3000"
+    "http://better-frontend.s3-website-us-east-1.amazonaws.com",
+    "https://what-to-eat-hanam.site",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["POST", "OPTIONS", "GET"],
-    allow_headers=["*"],
+    allow_methods=["POST", "OPTIONS", "GET", "HEAD"],
+    allow_headers=["content-type", "Access-Control-Allow-Origin"],
 )
+
+IMAGE_ROOT_DIR = "./image/"
 
 class Text(BaseModel):
     text: str
@@ -27,6 +31,12 @@ class Text(BaseModel):
 @app.get("/")
 def root():
     return {"Hello": "World"}
+
+@app.get("/images/{filename}")
+def read_item(filename):
+    targetFile = IMAGE_ROOT_DIR + filename + ".svg"
+    print(f"File Download : {targetFile}")
+    return FileResponse(targetFile, media_type='image/jpg',filename=filename)
 
 @app.options("/")
 def response_options():
