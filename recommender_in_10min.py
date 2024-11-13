@@ -180,12 +180,28 @@ def predict(targetText: str):
     print("번호", "상호명", "review_score", "category_score", "total_score")
     print("="*45)
 
+    categoryDict = {
+        "한식당": "korean",
+        "카페": "coffee",
+        "분식": "boonsik",
+        "일식당": "japanese",
+        "고기": "meat",
+        "햄버거": "hamburger",
+        "해물": "seafood",
+        "식당": "restaurant",
+        "간식": "boonsik", # 수정 필요
+        "호프": "beef",
+        "치킨": "chicken",
+        "중국집": "chinese",
+    }
+
     ret_val = []
     for idx, result in enumerate(results[:5]):
         addr = df3.loc[df3["name"]==result[1]]["position"].values[0]
         # df3.loc[df3["name"]==mapper[j]]["category3"].values[0]
         dist = df3.loc[df3["name"]==result[1]]["total_distance"].values[0]
         reqtime = df3.loc[df3["name"]==result[1]]["total_time"].values[0]
+        category = df3.loc[df3["name"]==result[1]]["category3"].values[0]
 
         print(result, addr, dist, reqtime)
         
@@ -200,6 +216,7 @@ def predict(targetText: str):
             "addr": str(addr),
             "dist": int(dist),
             "reqtime": int(reqtime),
+            "category0": categoryDict[str(category)],
         })
     print("입니다.")
 

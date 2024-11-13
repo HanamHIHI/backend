@@ -2,7 +2,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from starlette.responses import FileResponse
+# from starlette.responses import FileResponse
+from fastapi.responses import FileResponse
 
 import recommender_in_10min
 
@@ -36,10 +37,11 @@ def root():
 def read_item(filename):
     targetFile = IMAGE_ROOT_DIR + filename + ".svg"
     print(f"File Download : {targetFile}")
-    return FileResponse(targetFile, media_type='image/svg',filename=filename)
+    # return FileResponse(targetFile, media_type='image/svg+xml',filename=filename)
+    return FileResponse(targetFile, media_type="image/svg+xml", filename=filename)
 
 @app.options("/")
-def response_options():
+def response_options(): 
     return {"Hallo": "Wollo"}
 
 @app.post('/predict/')
