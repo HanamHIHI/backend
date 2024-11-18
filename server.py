@@ -5,7 +5,7 @@ from pydantic import BaseModel
 # from starlette.responses import FileResponse
 from fastapi.responses import FileResponse
 
-import recommender_in_10min
+import recommender_redis
 
 # Create the FastAPI app
 app = FastAPI()
@@ -26,8 +26,10 @@ app.add_middleware(
 
 IMAGE_ROOT_DIR = "./image/"
 
-class Text(BaseModel):
+class Input(BaseModel):
     text: str
+    range_start: int
+    range_end: int
 
 @app.get("/")
 def root():
@@ -45,5 +47,5 @@ def response_options():
     return {"Hallo": "Wollo"}
 
 @app.post('/predict/')
-async def create_item(text: Text):
-    return recommender_in_10min.predict(text.text)
+async def create_item(input: Input):
+    return recommender_redis.predict(input.text, input.range_start, input.range_end)

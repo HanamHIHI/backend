@@ -10,8 +10,8 @@ tags = ['hanam']
 tag = tags[0]
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-train_count = 800 # hyper_params.
-test_count = 200
+train_count = 80000 # hyper_params.
+test_count = 20000
 batch_size = 16
 epochs = 128
 
@@ -185,12 +185,12 @@ def predict(targetText: str):
         "카페": "coffee",
         "분식": "boonsik",
         "일식당": "japanese",
-        "고기": "meat",
+        "고기": "beef",
         "햄버거": "hamburger",
         "해물": "seafood",
         "식당": "restaurant",
         "간식": "boonsik", # 수정 필요
-        "호프": "beef",
+        "호프": "beer",
         "치킨": "chicken",
         "중국집": "chinese",
     }
