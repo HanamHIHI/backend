@@ -2,10 +2,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-# from starlette.responses import FileResponse
 from fastapi.responses import FileResponse
 
-import recommender_redis
+import recommender_chromadb_review
 
 # Create the FastAPI app
 app = FastAPI()
@@ -48,4 +47,4 @@ def response_options():
 
 @app.post('/predict/')
 async def create_item(input: Input):
-    return recommender_redis.predict(input.text, input.range_start, input.range_end)
+    return recommender_chromadb_review.predict(input.text, input.range_start, input.range_end)
